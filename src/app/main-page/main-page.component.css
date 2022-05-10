@@ -1,0 +1,13 @@
+app-skills-tree{
+  width: 75%;
+}
+
+app-material-preview{
+  width: 25%;
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

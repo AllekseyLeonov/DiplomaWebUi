@@ -1,6 +1,9 @@
 .d3-chart {
-  width: 75%;
-  height:1500px;
   border: 1px solid gray;
 }
 
+.container{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90vh;
+}

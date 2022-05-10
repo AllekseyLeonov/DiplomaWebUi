@@ -98,6 +98,7 @@ export class SkillsTreeComponent implements OnInit {
   verticalSeparationBetweenNodes = 3;
   nodes: any[] = [];
   links: any;
+  countOfLevels : number = 4;
 
   constructor() {
   }
@@ -108,12 +109,14 @@ export class SkillsTreeComponent implements OnInit {
 
   renderTreeChart() {
     const element: any = this.chartContainer.nativeElement;
+    this.margin.left = element.offsetWidth/2;
+    this.margin.right = element.offsetWidth/2;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
 
     this.svg = d3.select(element).append('svg')
       .attr('width', element.offsetWidth)
-      .attr('height', element.offsetHeight)
+      .attr('height', this.countOfLevels*180)
       .append('g')
       .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
@@ -214,9 +217,6 @@ export class SkillsTreeComponent implements OnInit {
         return 'translate(' + source.x + ',' + source.y + ')';
       })
       .remove();
-
-    nodeExit.select('rect')
-      .attr('r', 1e-6);
 
     nodeExit.select('text')
       .style('fill-opacity', 1e-6);
