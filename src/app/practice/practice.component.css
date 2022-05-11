@@ -1,0 +1,64 @@
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 90vh;
+}
+
+.task-section{
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.task-section__title{
+  align-self: center;
+}
+
+.task-section__description{
+
+}
+
+.practice-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: inherit;
+  align-items: stretch;
+  border: 5px dashed black;
+  align-self: center;
+  width: 97%;
+  height: 60%;
+}
+
+.input{
+  background-color: rgba(0,0,0,0.1);
+  flex-grow: 1;
+  overflow: auto;
+  padding-left: 2px;
+}
+
+.static-code{
+  height: fit-content;
+  background-color: rgba(0,0,0,0.05);
+}
+
+.test-button{
+  width: 20%;
+  align-self: center;
+}
+
+.tests-container{
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  border: 5px dashed black;
+  width: 97%;
+  align-self: center;
+}
