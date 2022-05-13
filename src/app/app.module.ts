@@ -12,13 +12,17 @@ import {MatIconModule} from "@angular/material/icon";
 import { MaterialPreviewComponent } from './material-preview/material-preview.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import {RouterModule, Routes} from "@angular/router";
+import {MatInputModule} from "@angular/material/input";
+
 import { DialogComponent } from './dialog/dialog.component';
 import { PracticeComponent } from './practice/practice.component';
-import {MatInputModule} from "@angular/material/input";
+import { DialogsPageComponent } from './dialogs-page/dialogs-page.component';
+import { DialogPreviewComponent } from './dialog-preview/dialog-preview.component';
 
 const appRoutes: Routes =[
   { path: '', component: MainPageComponent},
-  { path: 'dialogs', component: DialogComponent},
+  { path: 'dialogs', component: DialogsPageComponent},
+  { path: 'dialog', component: DialogComponent},
   { path: 'practice', component: PracticeComponent }
 ];
 
@@ -30,7 +34,9 @@ const appRoutes: Routes =[
     MaterialPreviewComponent,
     MainPageComponent,
     DialogComponent,
-    PracticeComponent
+    PracticeComponent,
+    DialogsPageComponent,
+    DialogPreviewComponent
   ],
     imports: [
         BrowserModule,
