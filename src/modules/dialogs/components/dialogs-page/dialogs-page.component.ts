@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import Dialog from "../models/Dialog";
+import Dialog from "../../../../app/models/Dialog";
 
 @Component({
   selector: 'app-dialogs-page',

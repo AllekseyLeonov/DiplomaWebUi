@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import Dialog from "../models/Dialog";
+import Dialog from "../../../../app/models/Dialog";
 
 @Component({
-  selector: 'app-dialog-preview',
+  selector: 'app-dialogs-preview',
   templateUrl: './dialog-preview.component.html',
   styleUrls: ['./dialog-preview.component.css']
 })
