@@ -1,7 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Store} from "@ngrx/store";
 import * as d3 from 'd3';
-import MaterialService from "../../services/MaterialService";
+
 import {Material} from "../../../../models/Material";
+import {materialsSelector} from "../../store/selectors";
+import {Observable} from "rxjs";
+import {getRequest} from "../../store/actions";
+
 
 
 @Component({
@@ -10,11 +15,11 @@ import {Material} from "../../../../models/Material";
   styleUrls: ['./skills-tree.component.css']
 })
 export class SkillsTreeComponent implements OnInit {
-  constructor(private service: MaterialService) {
-  }
+  constructor(private store$:Store,) {}
 
   @ViewChild('chart', {static: true}) private chartContainer!: ElementRef;
-  data!: Material;
+  data: Material | null = null;
+  data$: Observable<Material | null> = this.store$.select(materialsSelector);
 
   root: any;
   tree: any;
@@ -35,10 +40,13 @@ export class SkillsTreeComponent implements OnInit {
   countOfLevels: number = 5;
 
   ngOnInit() {
-    this.service.getMaterials$()
+    this.store$.dispatch(getRequest());
+    this.data$
       .subscribe(material => {
-        this.data = material;
-        this.renderTreeChart();
+        if(material){
+          this.data = material;
+          this.renderTreeChart();
+        }
       });
   }
 
@@ -60,7 +68,7 @@ export class SkillsTreeComponent implements OnInit {
       .nodeSize([this.nodeWidth + this.horizontalSeparationBetweenNodes, this.nodeHeight + this.verticalSeparationBetweenNodes])
       .separation((a, b) => a.parent == b.parent ? 10 : 5);
 
-    this.root = d3.hierarchy(this.data, (d) => d.children);
+    this.root = d3.hierarchy(this.data, (d) => d?.children);
     this.root.x0 = this.height / 2;
     this.root.y0 = 10;
 
