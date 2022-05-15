@@ -1,77 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import * as d3 from 'd3';
+import MaterialService from "../../services/MaterialService";
+import {Material} from "../../../../models/Material";
 
-interface HierarchyDatum {
-  name: string;
-  value: number;
-  children?: Array<HierarchyDatum>;
-}
-
-const data: HierarchyDatum = {
-  name: 'A1',
-  value: 100,
-  children: [
-    {
-      name: 'B1',
-      value: 100,
-      children: [
-        {
-          name: 'C1',
-          value: 100,
-          children: undefined
-        },
-        {
-          name: 'C2',
-          value: 300,
-          children: [
-            {
-              name: 'D1',
-              value: 100,
-              children: undefined
-            }
-          ]
-        },
-        {
-          name: 'C3',
-          value: 200,
-          children: undefined
-        }
-      ]
-    },
-    {
-      name: 'B2',
-      value: 200,
-      children: [
-        {
-          name: 'C4',
-          value: 100,
-          children: undefined
-        },
-        {
-          name: 'C5',
-          value: 300,
-          children: undefined
-        },
-        {
-          name: 'C6',
-          value: 200,
-          children: [
-            {
-              name: 'D3',
-              value: 100,
-              children: undefined
-            },
-            {
-              name: 'D4',
-              value: 300,
-              children: undefined
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
 
 @Component({
   selector: 'app-skills-tree',
@@ -79,11 +10,14 @@ const data: HierarchyDatum = {
   styleUrls: ['./skills-tree.component.css']
 })
 export class SkillsTreeComponent implements OnInit {
+  constructor(private service: MaterialService) {
+  }
+
   @ViewChild('chart', {static: true}) private chartContainer!: ElementRef;
+  data!: Material;
 
   root: any;
   tree: any;
-  treeLayout: any;
   svg: any;
 
   treeData: any;
@@ -93,30 +27,31 @@ export class SkillsTreeComponent implements OnInit {
   margin: any = {top: 100, bottom: 100, left: 500, right: 500};
   duration = 500;
   nodeWidth = 3;
-  nodeHeight = 3;
+  nodeHeight = 1;
   horizontalSeparationBetweenNodes = 10;
-  verticalSeparationBetweenNodes = 3;
+  verticalSeparationBetweenNodes = 1;
   nodes: any[] = [];
   links: any;
-  countOfLevels : number = 4;
-
-  constructor() {
-  }
+  countOfLevels: number = 5;
 
   ngOnInit() {
-    this.renderTreeChart();
+    this.service.getMaterials$()
+      .subscribe(material => {
+        this.data = material;
+        this.renderTreeChart();
+      });
   }
 
   renderTreeChart() {
     const element: any = this.chartContainer.nativeElement;
-    this.margin.left = element.offsetWidth/2;
-    this.margin.right = element.offsetWidth/2;
+    this.margin.left = element.offsetWidth / 2;
+    this.margin.right = element.offsetWidth / 2;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
 
     this.svg = d3.select(element).append('svg')
       .attr('width', element.offsetWidth)
-      .attr('height', this.countOfLevels*180)
+      .attr('height', this.countOfLevels * 180)
       .append('g')
       .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
@@ -125,7 +60,7 @@ export class SkillsTreeComponent implements OnInit {
       .nodeSize([this.nodeWidth + this.horizontalSeparationBetweenNodes, this.nodeHeight + this.verticalSeparationBetweenNodes])
       .separation((a, b) => a.parent == b.parent ? 10 : 5);
 
-    this.root = d3.hierarchy(data, (d) => d.children);
+    this.root = d3.hierarchy(this.data, (d) => d.children);
     this.root.x0 = this.height / 2;
     this.root.y0 = 10;
 
@@ -133,17 +68,22 @@ export class SkillsTreeComponent implements OnInit {
   }
 
   // @ts-ignore
-  click = (d) => {
+  onMaterialClick = (d) => {
     console.log('click', d);
-    if (d.children) {
-      d._children = d.children;
-      d.children = null;
-    } else {
-      d.children = d._children;
-      d._children = null;
-    }
+    if(d.data.isSectionParent){
+      if (d.children) {
+        d._children = d.children;
+        d.children = null;
+      } else {
+        d.children = d._children;
+        d._children = null;
+      }
 
-    this.updateChart(d);
+      this.updateChart(d);
+    }
+    else {
+
+    }
   }
 
   // @ts-ignore
@@ -166,7 +106,7 @@ export class SkillsTreeComponent implements OnInit {
       .attr('transform', () => {
         return 'translate(' + source.x0 + ',' + source.y0 + ')';
       })
-      .on('click', this.click);
+      .on('click', this.onMaterialClick);
 
     nodeEnter.append('rect')
       .attr('class', 'node')
@@ -181,10 +121,10 @@ export class SkillsTreeComponent implements OnInit {
     nodeEnter.append('text')
       .attr('dx', '0.5em')
       .attr('y', (d: { children: any; _children: any; }) => {
-        return d.children || d._children ? -20 : 20;
+        return -20;
       })
       .attr('text-anchor', (d: { children: any; _children: any; }) => {
-        return d.children || d._children ? 'end' : 'start';
+        return 'start';
       })
       .style('font', '12px sans-serif')
       .style('font-weight', 'bold')
@@ -205,11 +145,16 @@ export class SkillsTreeComponent implements OnInit {
       .attr('width', 20)
       .attr('transform', 'rotate(45)')
       .style('stroke-width', '3px')
-      .style('stroke', 'steelblue')
-      .style('fill', (d: { _children: any; }) => {
-        return d._children ? 'lightsteelblue' : '#fff';
+      .style('stroke', (d: {data: {isAvailable: boolean}}) => {
+        return d.data.isAvailable ? 'steelblue' : 'grey';
       })
-      .attr('cursor', 'pointer');
+      .style('fill', (d: {data: {isSectionParent: boolean, isCompleted: boolean}}) => {
+        if(d.data.isCompleted) return 'steelblue';
+        return d.data.isSectionParent ? 'lightsteelblue' : '#fff';
+      })
+      .attr('cursor', (d: {data: {isAvailable: boolean, isCompleted: boolean}}) => {
+        return d.data.isAvailable || d.data.isCompleted ? 'pointer' : 'default';
+      });
 
     const nodeExit = node.exit().transition()
       .duration(this.duration)

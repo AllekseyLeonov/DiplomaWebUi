@@ -8,6 +8,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {RouterModule} from "@angular/router";
+import MaterialService from "./services/MaterialService";
 
 
 
@@ -24,6 +25,9 @@ import {RouterModule} from "@angular/router";
     MatButtonModule,
     MatIconModule,
     RouterModule,
+  ],
+  providers: [
+    MaterialService,
   ]
 })
 export class MaterialsModule { }

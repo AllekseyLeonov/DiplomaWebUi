@@ -18,6 +18,7 @@ import {DialogsPageComponent} from '../modules/dialogs/components/dialogs-page/d
 import {DialogsModule} from "../modules/dialogs/dialogs.module";
 import {MaterialsModule} from "../modules/materials/materials.module";
 import {PracticeModule} from "../modules/practice/practice.module";
+import {HttpClientModule} from "@angular/common/http";
 
 const appRoutes: Routes = [
   {path: '', component: MainPageComponent},
@@ -43,6 +44,7 @@ const appRoutes: Routes = [
     DialogsModule,
     MaterialsModule,
     PracticeModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
