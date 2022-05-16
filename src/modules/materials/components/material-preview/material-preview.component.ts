@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+
+import {selectedMaterialSelector} from "../../store/selectors";
+import {MaterialPreview} from "../../../../models/Material";
 
 @Component({
   selector: 'app-material-preview',
@@ -7,9 +12,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MaterialPreviewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store$:Store) { }
 
   ngOnInit(): void {
+    this.material$.subscribe(
+      material => this.material = material
+    )
   }
 
+  material: MaterialPreview = {
+    id: "",
+    name: "",
+    description: "",
+    practiceId: "",
+    theoryId: "",
+  };
+
+  material$: Observable<MaterialPreview> = this.store$.select(selectedMaterialSelector);
 }

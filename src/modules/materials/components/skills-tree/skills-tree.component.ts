@@ -2,10 +2,11 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as d3 from 'd3';
 
-import {Material} from "../../../../models/Material";
+import {Material, MaterialPreview} from "../../../../models/Material";
 import {materialsSelector} from "../../store/selectors";
 import {Observable} from "rxjs";
-import {getRequest} from "../../store/actions";
+import {getRequest, setMaterialPreview} from "../../store/actions";
+import {dispatch} from "d3";
 
 
 
@@ -78,6 +79,9 @@ export class SkillsTreeComponent implements OnInit {
   // @ts-ignore
   onMaterialClick = (d) => {
     console.log('click', d);
+    if(!d.data.isAvailable){
+      return;
+    }
     if(d.data.isSectionParent){
       if (d.children) {
         d._children = d.children;
@@ -90,7 +94,14 @@ export class SkillsTreeComponent implements OnInit {
       this.updateChart(d);
     }
     else {
-
+      const materialPreview : MaterialPreview = {
+        id: d.data.id,
+        name: d.data.name,
+        description: d.data.description,
+        practiceId: d.data.practiceId,
+        theoryId: d.data.theoryId,
+      }
+      this.store$.dispatch(setMaterialPreview({materialPreview}));
     }
   }
 
