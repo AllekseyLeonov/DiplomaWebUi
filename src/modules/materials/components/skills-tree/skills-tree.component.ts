@@ -1,14 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as d3 from 'd3';
+import {Observable} from "rxjs";
 
 import {Material, MaterialPreview} from "../../../../models/Material";
 import {materialsSelector} from "../../store/selectors";
-import {Observable} from "rxjs";
 import {getRequest, setMaterialPreview} from "../../store/actions";
-import {dispatch} from "d3";
-
-
 
 @Component({
   selector: 'app-skills-tree',

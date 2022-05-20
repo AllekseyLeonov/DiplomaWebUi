@@ -5,7 +5,7 @@
   </div>
   <div class="button-section">
     <button mat-button routerLink="/theory">Theory</button>
-    <button mat-button routerLink="/practice">Practice</button>
+    <button mat-button [routerLink]="['/practice/', material.practiceId]">Practice</button>
   </div>
 </div>
 

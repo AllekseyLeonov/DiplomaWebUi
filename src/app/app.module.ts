@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'dialogs', component: DialogsPageComponent},
   {path: 'dialog', component: DialogComponent},
-  {path: 'practice', component: PracticeComponent}
+  {path: 'practice/:id', component: PracticeComponent}
 ];
 
 @NgModule({
