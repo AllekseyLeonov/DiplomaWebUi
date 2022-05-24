@@ -4,3 +4,8 @@ export interface User{
   login: string,
   password: string,
 }
+
+export interface LoginResponse{
+  isSucceed: boolean,
+  user: User | null;
+}

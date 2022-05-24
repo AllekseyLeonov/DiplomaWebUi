@@ -11,6 +11,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MainPageComponent} from '../modules/materials/components/main-page/main-page.component';
 import {RouterModule, Routes} from "@angular/router";
 import {MatInputModule} from "@angular/material/input";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 
 import {DialogComponent} from '../modules/dialogs/components/dialog/dialog.component';
 import {PracticeComponent} from '../modules/practice/components/practice/practice.component';
@@ -23,6 +24,10 @@ import {RootStoreModule} from "../modules/root-store/root-store.module";
 import {TheoryPageComponent} from "../modules/theory/components/theory-page/theory-page.component";
 import {TheoryModule} from "../modules/theory/theory.module";
 import {UserModule} from "../modules/user/user.module";
+import { ProfileDialogComponent } from './components/profile-dialog/profile-dialog.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import {FormsModule} from "@angular/forms";
+
 
 const appRoutes: Routes = [
   {path: '', component: MainPageComponent},
@@ -36,6 +41,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
+    ProfileDialogComponent,
+    LoginDialogComponent,
+    ProfileDialogComponent,
+    LoginDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +53,6 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule.forRoot(appRoutes),
     MatInputModule,
     DialogsModule,
     TheoryModule,
@@ -53,8 +61,11 @@ const appRoutes: Routes = [
     UserModule,
     HttpClientModule,
     RootStoreModule,
+    RouterModule.forRoot(appRoutes),
+    MatDialogModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

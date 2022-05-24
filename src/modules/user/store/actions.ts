@@ -1,8 +1,10 @@
 import {createAction, props} from "@ngrx/store";
-import {User} from "../../../models/User";
+import {LoginResponse, User} from "../../../models/User";
 
 const usersKey = "[USERS]";
 
-export const getRequest = createAction(usersKey + "getRequest", props<{id: string}>());
-export const getRequestSuccess = createAction(usersKey + "getRequestSuccess", props<{user: User}>());
-export const getRequestError = createAction(usersKey + "getRequestError", props<{error:string}>());
+export const login = createAction(usersKey + "login", props<{login: string, password: string}>());
+export const loginSuccess = createAction(usersKey + "loginSuccess", props<{response: LoginResponse}>());
+export const loginError = createAction(usersKey + "loginError", props<{error:string}>());
+
+export const setUserData = createAction(usersKey + "setUserData", props<{user: User | null}>())

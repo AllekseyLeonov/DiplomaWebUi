@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Profile</h2>
+<mat-dialog-content class="user-data-container">
+  <span>{{data.name}}</span>
+  <span>{{data.login}}</span>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="handleLogoutButtonClick()">Logout</button>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
