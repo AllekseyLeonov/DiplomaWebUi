@@ -20,12 +20,15 @@ import {MaterialsModule} from "../modules/materials/materials.module";
 import {PracticeModule} from "../modules/practice/practice.module";
 import {HttpClientModule} from "@angular/common/http";
 import {RootStoreModule} from "../modules/root-store/root-store.module";
+import {TheoryPageComponent} from "../modules/theory/components/theory-page/theory-page.component";
+import {TheoryModule} from "../modules/theory/theory.module";
 
 const appRoutes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'dialogs', component: DialogsPageComponent},
   {path: 'dialog', component: DialogComponent},
-  {path: 'practice/:id', component: PracticeComponent}
+  {path: 'practice/:id', component: PracticeComponent},
+  {path: 'theory/:id', component: TheoryPageComponent},
 ];
 
 @NgModule({
@@ -43,6 +46,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MatInputModule,
     DialogsModule,
+    TheoryModule,
     MaterialsModule,
     PracticeModule,
     HttpClientModule,
