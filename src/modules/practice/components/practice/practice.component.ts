@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 
 import {Practice} from "../../../../models/Practice";
 import {addConsoleMessage, checkCodeRequest, getRequest} from "../../store/actions";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {consoleMessagesSelector, practiceSelector} from "../../store/selectors";
 import PracticeService from "../../services/PracticeService";
 
@@ -13,7 +13,7 @@ import PracticeService from "../../services/PracticeService";
   templateUrl: './practice.component.html',
   styleUrls: ['./practice.component.css']
 })
-export class PracticeComponent implements OnInit {
+export class PracticeComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
@@ -27,15 +27,19 @@ export class PracticeComponent implements OnInit {
   consoleMessages: string[] = [];
   consoleMessages$: Observable<string[]> = this.store.select(consoleMessagesSelector);
 
+  routeSubscription: Subscription | undefined;
+  practiceSubscription: Subscription | undefined;
+  messagesSubscription: Subscription | undefined;
+
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.routeSubscription = this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.store.dispatch(getRequest({id}));
     });
-    this.practice$.subscribe(practice => {
+    this.practiceSubscription = this.practice$.subscribe(practice => {
       this.practice = practice;
     });
-    this.consoleMessages$.subscribe(messages =>
+    this.messagesSubscription = this.consoleMessages$.subscribe(messages =>
       this.consoleMessages = messages,
     )
   }
@@ -74,5 +78,11 @@ export class PracticeComponent implements OnInit {
       return this.practice.staticCode.slice(indexOfInner + innerString.length, indexOfOuter);
     }
     return "";
+  }
+
+  ngOnDestroy() {
+    this.routeSubscription?.unsubscribe();
+    this.practiceSubscription?.unsubscribe();
+    this.messagesSubscription?.unsubscribe();
   }
 }

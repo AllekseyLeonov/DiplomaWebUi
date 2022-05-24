@@ -22,6 +22,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {RootStoreModule} from "../modules/root-store/root-store.module";
 import {TheoryPageComponent} from "../modules/theory/components/theory-page/theory-page.component";
 import {TheoryModule} from "../modules/theory/theory.module";
+import {UserModule} from "../modules/user/user.module";
 
 const appRoutes: Routes = [
   {path: '', component: MainPageComponent},
@@ -49,6 +50,7 @@ const appRoutes: Routes = [
     TheoryModule,
     MaterialsModule,
     PracticeModule,
+    UserModule,
     HttpClientModule,
     RootStoreModule,
   ],

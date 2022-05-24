@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 import {theoryContentSelector} from "../../store/selectors";
 import {getRequest} from "../../store/actions";
@@ -13,7 +13,7 @@ import {Theory} from "../../../../models/Theory";
   styleUrls: ['./theory-page.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class TheoryPageComponent implements OnInit {
+export class TheoryPageComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
@@ -22,14 +22,22 @@ export class TheoryPageComponent implements OnInit {
   content: string = "<div></div>"
   theory$: Observable<Theory> = this.store.select(theoryContentSelector);
 
+  routeSubscription: Subscription | undefined;
+  theorySubscription: Subscription | undefined;
+
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
+    this.routeSubscription = this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.store.dispatch(getRequest({id}));
     });
-    this.theory$.subscribe(theory => {
+    this.routeSubscription = this.theory$.subscribe(theory => {
       this.content = theory.content;
     });
+  }
+
+  ngOnDestroy() {
+    this.routeSubscription?.unsubscribe();
+    this.theorySubscription?.unsubscribe();
   }
 
 }

@@ -1,7 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as d3 from 'd3';
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 import {Material, MaterialPreview} from "../../../../models/Material";
 import {materialsSelector} from "../../store/selectors";
@@ -12,7 +12,7 @@ import {getRequest, setMaterialPreview} from "../../store/actions";
   templateUrl: './skills-tree.component.html',
   styleUrls: ['./skills-tree.component.css']
 })
-export class SkillsTreeComponent implements OnInit {
+export class SkillsTreeComponent implements OnInit, OnDestroy {
   constructor(private store$:Store,) {}
 
   @ViewChild('chart', {static: true}) private chartContainer!: ElementRef;
@@ -37,9 +37,11 @@ export class SkillsTreeComponent implements OnInit {
   links: any;
   countOfLevels: number = 5;
 
+  materialSubscription: Subscription | undefined;
+
   ngOnInit() {
     this.store$.dispatch(getRequest());
-    this.data$
+    this.materialSubscription = this.data$
       .subscribe(material => {
         if(material){
           this.data = material;
@@ -221,5 +223,9 @@ export class SkillsTreeComponent implements OnInit {
         `${d.x} ${d.y}`;
       return path;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.materialSubscription?.unsubscribe();
   }
 }
