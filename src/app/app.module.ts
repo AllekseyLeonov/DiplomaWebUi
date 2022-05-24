@@ -27,6 +27,7 @@ import {UserModule} from "../modules/user/user.module";
 import { ProfileDialogComponent } from './components/profile-dialog/profile-dialog.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import {FormsModule} from "@angular/forms";
+import { CreateAccountDialogComponent } from './components/create-account-dialog/create-account-dialog.component';
 
 
 const appRoutes: Routes = [
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
     LoginDialogComponent,
     ProfileDialogComponent,
     LoginDialogComponent,
+    CreateAccountDialogComponent,
   ],
   imports: [
     BrowserModule,

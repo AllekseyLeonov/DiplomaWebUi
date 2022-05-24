@@ -1,6 +1,7 @@
 import {Observable} from "rxjs";
-import {LoginResponse} from "../../../../models/User";
+import {CreateAccountRequest, CreateAccountResponse, LoginResponse} from "../../../../models/User";
 
 export interface IUserService{
-  login$(login: string, password: string) : Observable<LoginResponse>
+  login$(login: string, password: string) : Observable<LoginResponse>;
+  createAccount$(request: CreateAccountRequest): Observable<CreateAccountResponse>;
 }

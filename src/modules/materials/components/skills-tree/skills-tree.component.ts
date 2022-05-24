@@ -45,6 +45,7 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
       .subscribe(material => {
         if(material){
           this.data = material;
+          this.chartContainer.nativeElement.innerHTML = "";
           this.renderTreeChart();
         }
       });

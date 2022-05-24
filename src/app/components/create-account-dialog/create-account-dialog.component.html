@@ -5,12 +5,16 @@
     <input matInput type="email" [(ngModel)]="login">
   </mat-form-field>
   <mat-form-field appearance="fill">
+    <mat-label>Enter your name</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
     <input matInput type="password" [(ngModel)]="password">
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="handleCreateAccountButtonClick()">Create account</button>
+  <button mat-button (click)="handleLoginButtonClick()">Login</button>
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button (click)="handleSubmitButtonClick()">Submit</button>
 </mat-dialog-actions>
