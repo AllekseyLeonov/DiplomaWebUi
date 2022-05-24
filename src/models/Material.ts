@@ -1,10 +1,10 @@
 export interface Material{
   id: string,
+  parentId: string,
   name: string,
   description: string,
   children: Material[],
   isSectionParent: boolean,
-  IsAvailable: boolean,
   practiceId: string,
   theoryId: string,
 }

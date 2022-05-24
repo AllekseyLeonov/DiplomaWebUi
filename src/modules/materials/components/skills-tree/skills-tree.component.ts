@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import {Observable, Subscription} from "rxjs";
 
 import {Material, MaterialPreview} from "../../../../models/Material";
-import {materialsSelector} from "../../store/selectors";
+import {completedMaterialsSelector, materialsSelector} from "../../store/selectors";
 import {getRequest, setMaterialPreview} from "../../store/actions";
 
 @Component({
@@ -38,6 +38,8 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
   countOfLevels: number = 5;
 
   materialSubscription: Subscription | undefined;
+  completedMaterialSubscription: Subscription | undefined;
+  completedMaterials: string[] = [];
 
   ngOnInit() {
     this.store$.dispatch(getRequest());
@@ -45,9 +47,14 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
       .subscribe(material => {
         if(material){
           this.data = material;
-          this.chartContainer.nativeElement.innerHTML = "";
-          this.renderTreeChart();
         }
+      });
+    this.completedMaterialSubscription = this.store$
+      .select(completedMaterialsSelector)
+      .subscribe(materials => {
+        this.completedMaterials = materials;
+        this.chartContainer.nativeElement.innerHTML = "";
+        this.renderTreeChart();
       });
   }
 
@@ -76,10 +83,18 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
     this.updateChart(this.root);
   }
 
+  isMaterialAvailable(data: Material): boolean {
+    return this.completedMaterials.includes(data.id) || this.completedMaterials.includes(data.parentId);
+  };
+
+  isMaterialCompleted(data: Material): boolean {
+    return this.completedMaterials.includes(data.id);
+  };
+
   // @ts-ignore
   onMaterialClick = (d) => {
     console.log('click', d);
-    if(!d.data.isAvailable){
+    if(!this.isMaterialAvailable(d.data)){
       return;
     }
     if(d.data.isSectionParent){
@@ -164,15 +179,16 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
       .attr('width', 20)
       .attr('transform', 'rotate(45)')
       .style('stroke-width', '3px')
-      .style('stroke', (d: {data: {isAvailable: boolean}}) => {
-        return d.data.isAvailable ? 'steelblue' : 'grey';
+      .style('stroke', (d: {data: Material}) => {
+        return this.isMaterialAvailable(d.data) ? 'steelblue' : 'grey';
       })
-      .style('fill', (d: {data: {isSectionParent: boolean, isCompleted: boolean}}) => {
-        if(d.data.isCompleted) return 'steelblue';
-        return d.data.isSectionParent ? 'lightsteelblue' : '#fff';
+      .style('fill', (d: {data: Material}) => {
+        if(d.data.isSectionParent) return 'lightsteelblue';
+        if(this.isMaterialCompleted(d.data)) return 'steelblue';
+        return '#fff';
       })
-      .attr('cursor', (d: {data: {isAvailable: boolean, isCompleted: boolean}}) => {
-        return d.data.isAvailable || d.data.isCompleted ? 'pointer' : 'default';
+      .attr('cursor', (d: {data: Material}) => {
+        return this.isMaterialAvailable(d.data) ? 'pointer' : 'default';
       });
 
     const nodeExit = node.exit().transition()
@@ -228,5 +244,6 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.materialSubscription?.unsubscribe();
+    this.completedMaterialSubscription?.unsubscribe();
   }
 }

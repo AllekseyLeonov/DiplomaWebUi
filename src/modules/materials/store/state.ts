@@ -5,6 +5,7 @@ export interface MaterialsState {
   isLoadingForMaterial: boolean,
   requestError: string,
   selectedMaterial: MaterialPreview,
+  completedMaterials: string[],
 }
 
 export const initialState : MaterialsState = {
@@ -18,4 +19,5 @@ export const initialState : MaterialsState = {
     practiceId: "00000000-0000-0000-0000-000000000001",
     theoryId: "00000000-0000-0000-0000-000000000001"
   },
+  completedMaterials: [],
 }

@@ -13,4 +13,8 @@ export default class MaterialService implements IMaterialService{
   getMaterials$(): Observable<Material> {
     return this.client.get<Material>(`${environment.apiRootAddress}/Materials/GetMaterialsTree?technologyId=00000000-0000-0000-0000-000000000001`);
   }
+
+  getAvailableMaterials$(userId: string): Observable<string[]> {
+    return this.client.get<string[]>(`${environment.apiRootAddress}/Materials/GetCompletedMaterials?userId=${userId}`);
+  }
 }
