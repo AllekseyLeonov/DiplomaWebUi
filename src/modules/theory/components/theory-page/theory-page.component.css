@@ -1,0 +1,19 @@
+.theory-container{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title{
+  align-self: center;
+  font-weight: bold;
+}
+
+.code{
+  width: 97%;
+  padding: 10px;
+  align-self: center;
+  border: 2px dashed black;
+  font-family: Verdana;
+}
+

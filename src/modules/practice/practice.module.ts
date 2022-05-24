@@ -7,8 +7,6 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import PracticeService from "./services/PracticeService";
 
-
-
 @NgModule({
   declarations: [
     PracticeComponent
