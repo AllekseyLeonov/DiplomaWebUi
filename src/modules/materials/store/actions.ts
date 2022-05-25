@@ -13,3 +13,7 @@ export const setMaterials =
   createAction(materialsKey+"setMaterials", props<{materials: Material}>());
 export const setCompletedMaterials =
   createAction(materialsKey+"setCompletedMaterials", props<{materials: string[]}>());
+
+export const getAvailableMaterialsRequest = createAction(materialsKey + "getAvailableMaterialsRequest", props<{userId: string}>());
+export const getAvailableMaterialsSuccess = createAction(materialsKey + "getAvailableMaterialsSuccess", props<{materials: string[]}>());
+export const getAvailableMaterialsError = createAction(materialsKey + "getAvailableMaterialsError", props<{error:string}>());

@@ -5,7 +5,9 @@ import {Observable, Subscription} from "rxjs";
 
 import {Material, MaterialPreview} from "../../../../models/Material";
 import {completedMaterialsSelector, materialsSelector} from "../../store/selectors";
-import {getRequest, setMaterialPreview} from "../../store/actions";
+import {getAvailableMaterialsRequest, getRequest, setMaterialPreview} from "../../store/actions";
+import {userSelector} from "../../../user/store/selectors";
+import {User} from "../../../../models/User";
 
 @Component({
   selector: 'app-skills-tree',
@@ -47,6 +49,8 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
       .subscribe(material => {
         if(material){
           this.data = material;
+          this.chartContainer.nativeElement.innerHTML = "";
+          this.renderTreeChart();
         }
       });
     this.completedMaterialSubscription = this.store$

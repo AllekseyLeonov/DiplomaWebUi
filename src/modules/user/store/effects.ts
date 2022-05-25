@@ -5,6 +5,7 @@ import {Action} from "@ngrx/store";
 
 import {createAccount, createAccountError, createAccountSuccess, login, loginError, loginSuccess} from "./actions";
 import UserService from "../services/UserService";
+import {getAvailableMaterialsRequest} from "../../materials/store/actions";
 
 @Injectable()
 export class userEffects {
@@ -18,6 +19,14 @@ export class userEffects {
             }),
             catchError(error => of(loginError({error})))
           )
+        }
+      ));
+    }
+  )
+
+  loginSuccessEffect$: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(loginSuccess), map(loginInfo => {
+          return getAvailableMaterialsRequest({userId: loginInfo.response.user?.id || ""})
         }
       ));
     }

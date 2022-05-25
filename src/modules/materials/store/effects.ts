@@ -1,17 +1,28 @@
 import {Injectable} from "@angular/core";
-import {catchError, map, Observable, of, switchMap} from "rxjs";
+import {catchError, map, Observable, of, switchMap, takeLast} from "rxjs";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {Action, Store} from "@ngrx/store";
+import {Action, select, Store} from "@ngrx/store";
 
-import {getRequest, getRequestError, getRequestSuccess, setCompletedMaterials, setMaterials} from "./actions";
+import {
+  getAvailableMaterialsError,
+  getAvailableMaterialsRequest, getAvailableMaterialsSuccess,
+  getRequest,
+  getRequestError,
+  getRequestSuccess,
+  setCompletedMaterials,
+  setMaterials
+} from "./actions";
 import MaterialService from "../services/MaterialService";
+import {userSelector} from "../../user/store/selectors";
+import {User} from "../../../models/User";
 
 @Injectable()
 export class materialsEffects {
   constructor(
     private materialService: MaterialService,
     private actions$: Actions,
-    private store$: Store) {}
+    private store$: Store) {
+  }
 
   getMaterialRequestEffect$: Observable<Action> = createEffect(() => {
       return this.actions$.pipe(ofType(getRequest), switchMap(action => {
@@ -27,16 +38,17 @@ export class materialsEffects {
   )
 
   getMaterialRequestSuccessEffect$: Observable<Action> = createEffect(() => {
-    return this.actions$.pipe(ofType(getRequestSuccess), switchMap(action => {
-        console.log("here3");
-        return this.materialService.getAvailableMaterials$("00000000-0000-0000-0000-000000000001").pipe(
-            map(result => {
-              return setCompletedMaterials({materials: result});
-            }),
-            catchError(error => of(getRequestError({error})))
-          )
-        }
-      ));
+      return this.actions$.pipe(
+        ofType(getAvailableMaterialsRequest),
+        switchMap(action => {
+            return this.materialService.getAvailableMaterials$(action.userId).pipe(
+              map(result => {
+                return getAvailableMaterialsSuccess({materials: result});
+              }),
+              catchError(error => of(getAvailableMaterialsError({error})))
+            )
+          }
+        ));
     }
   )
 }
