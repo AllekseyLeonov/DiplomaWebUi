@@ -6,18 +6,20 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import PracticeService from "./services/PracticeService";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
     PracticeComponent
   ],
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
+    imports: [
+        CommonModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule,
+    ],
   providers:[
     PracticeService
   ]

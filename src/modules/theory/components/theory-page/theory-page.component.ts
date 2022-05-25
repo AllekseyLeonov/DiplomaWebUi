@@ -21,6 +21,7 @@ export class TheoryPageComponent implements OnInit, OnDestroy {
 
   content: string = "<div></div>"
   theory$: Observable<Theory> = this.store.select(theoryContentSelector);
+  theory: Theory | null = null;
 
   routeSubscription: Subscription | undefined;
   theorySubscription: Subscription | undefined;
@@ -31,6 +32,7 @@ export class TheoryPageComponent implements OnInit, OnDestroy {
       this.store.dispatch(getRequest({id}));
     });
     this.routeSubscription = this.theory$.subscribe(theory => {
+      this.theory = theory;
       this.content = theory.content;
     });
   }

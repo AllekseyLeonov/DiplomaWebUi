@@ -8,6 +8,7 @@ export interface PracticeState {
 
 export const initialState : PracticeState = {
   theory: {
+    id: '',
     content: '',
   },
   isLoadingForTheory: false,

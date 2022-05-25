@@ -5,10 +5,16 @@
   height: 90vh;
 }
 
-.task-section{
+.task-section-container{
   display: flex;
   flex-direction: column;
   width: 25%;
+  justify-content: space-between;
+}
+
+.task-section{
+  display: flex;
+  flex-direction: column;
 }
 
 .task-section__title{
@@ -17,6 +23,10 @@
 
 .task-section__description{
 
+}
+
+.task-section__go-to-theory{
+  align-self: center;
 }
 
 .practice-section{

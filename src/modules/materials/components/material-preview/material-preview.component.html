@@ -4,8 +4,8 @@
     <span class="description">{{material.description}}</span>
   </div>
   <div class="button-section">
-    <button mat-button [routerLink]="['/theory', material.theoryId]">Theory</button>
-    <button mat-button [routerLink]="['/practice/', material.practiceId]">Practice</button>
+    <button [disabled]="buttonsDisabled" mat-button [routerLink]="['/theory', material.theoryId]">Theory</button>
+    <button [disabled]="buttonsDisabled" mat-button [routerLink]="['/practice/', material.practiceId]">Practice</button>
   </div>
 </div>
 

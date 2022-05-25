@@ -4,6 +4,8 @@ import {Store} from "@ngrx/store";
 
 import {selectedMaterialSelector} from "../../store/selectors";
 import {MaterialPreview} from "../../../../models/Material";
+import {User} from "../../../../models/User";
+import {userSelector} from "../../../user/store/selectors";
 
 @Component({
   selector: 'app-material-preview',
@@ -14,13 +16,8 @@ export class MaterialPreviewComponent implements OnInit, OnDestroy {
 
   constructor(private store$:Store) { }
 
-  materialSubscription: Subscription | undefined;
-
-  ngOnInit(): void {
-    this.materialSubscription = this.material$.subscribe(
-      material => this.material = material
-    )
-  }
+  buttonsDisabled: boolean = true;
+  material$: Observable<MaterialPreview> = this.store$.select(selectedMaterialSelector);
 
   material: MaterialPreview = {
     id: "",
@@ -30,7 +27,21 @@ export class MaterialPreviewComponent implements OnInit, OnDestroy {
     theoryId: "",
   };
 
-  material$: Observable<MaterialPreview> = this.store$.select(selectedMaterialSelector);
+  user$: Observable<User | null> = this.store$.select(userSelector);
+  user: User | null = null;
+
+  materialSubscription: Subscription | undefined;
+  userSubscription: Subscription | undefined;
+
+  ngOnInit(): void {
+    this.materialSubscription = this.material$.subscribe(
+      material => this.material = material
+    )
+    this.userSubscription = this.user$.subscribe(user=> {
+      this.user = user;
+      this.buttonsDisabled = user == null;
+    })
+  }
 
   ngOnDestroy(): void {
     this.materialSubscription?.unsubscribe();
