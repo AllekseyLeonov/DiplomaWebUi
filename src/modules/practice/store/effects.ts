@@ -3,7 +3,14 @@ import {catchError, map, Observable, of, switchMap} from "rxjs";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Action} from "@ngrx/store";
 
-import {checkCodeRequest, checkCodeRequestSuccess, getRequest, getRequestError, getRequestSuccess} from "./actions";
+import {
+  addMessage, addMessageSuccess,
+  checkCodeRequest,
+  checkCodeRequestSuccess,
+  getRequest,
+  getRequestError,
+  getRequestSuccess
+} from "./actions";
 import PracticeService from "../services/PracticeService";
 
 @Injectable()
@@ -30,6 +37,18 @@ export class practiceEffects {
               return checkCodeRequestSuccess({response: result})
             }),
             catchError(error => of(getRequestError({error})))
+          )
+        }
+      ));
+    }
+  )
+
+  addMessageEffect: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(addMessage), switchMap(action => {
+          return this.practiceService.addMessageFromPractice$(action.message).pipe(
+            map(result => {
+              return addMessageSuccess();
+            }),
           )
         }
       ));

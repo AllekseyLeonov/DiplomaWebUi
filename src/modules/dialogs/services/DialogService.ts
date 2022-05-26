@@ -21,8 +21,4 @@ export default class DialogService implements IDialogService{
   addMessage$(request: AddMessageRequest): Observable<void> {
     return this.client.post<void>(`${environment.apiRootAddress}/Dialogs/AddMessage`, request);
   }
-
-  addMessageFromPractice$(request: AddMessageFromPracticeRequest): Observable<void> {
-    return this.client.post<void>(`${environment.apiRootAddress}/Dialogs/AddMessageFromPractice`, request);
-  }
 }

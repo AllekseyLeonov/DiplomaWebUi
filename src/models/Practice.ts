@@ -4,6 +4,7 @@ export interface Practice{
   theoryId: string,
   description: string,
   staticCode: string;
+  moderatorId: string;
 }
 
 export interface CheckCodeRequest{

@@ -4,7 +4,10 @@
       <h1 class="task-section__title">{{practice.title}}</h1>
       <span class="task-section__description">{{practice.description}}</span>
     </div>
-    <button class="task-section__go-to-theory" mat-button [routerLink]="['/theory', practice.theoryId]">Перейти к теории</button>
+    <div>
+      <button class="task-section__go-to-theory" mat-button [routerLink]="['/theory', practice.theoryId]">Перейти к теории</button>
+      <button class="task-section__go-to-theory" mat-button (click)="handleAskButtonClick()">Задать вопрос</button>
+    </div>
   </div>
   <div class="practice-section" *ngIf="practice">
     <div class="input-container">

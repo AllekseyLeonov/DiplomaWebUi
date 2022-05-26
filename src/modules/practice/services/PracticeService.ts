@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {IPracticeService} from "./interfaces/IPracticeService";
 import {environment} from "../../../environments/environment";
 import {CheckCodeRequest, CheckCodeResponse, Practice} from "../../../models/Practice";
+import {AddMessageFromPracticeRequest} from "../../../models/Dialog";
 
 @Injectable()
 export default class PracticeService implements IPracticeService{
@@ -16,5 +17,9 @@ export default class PracticeService implements IPracticeService{
 
   checkCode(data: CheckCodeRequest): Observable<CheckCodeResponse>{
     return this.client.post<CheckCodeResponse>(`${environment.apiRootAddress}/Code/CheckCode?`, data);
+  }
+
+  addMessageFromPractice$(request: AddMessageFromPracticeRequest): Observable<void> {
+    return this.client.post<void>(`${environment.apiRootAddress}/Dialogs/AddMessageFromPractice`, request);
   }
 }

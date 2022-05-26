@@ -6,5 +6,4 @@ export interface IDialogService {
   getDialogs$(userId: string) : Observable<Dialog[]>;
   getDialogById$(userId: string) : Observable<Dialog>;
   addMessage$(request: AddMessageRequest) : Observable<void>;
-  addMessageFromPractice$(request: AddMessageFromPracticeRequest) : Observable<void>;
 }

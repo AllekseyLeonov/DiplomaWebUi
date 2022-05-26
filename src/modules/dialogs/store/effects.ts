@@ -54,7 +54,7 @@ export class dialogEffects {
         }
           return this.dialogService.addMessage$(request).pipe(
             map(result => {
-              return addMessageSuccess()
+              return addMessageSuccess();
             })
           )
         }

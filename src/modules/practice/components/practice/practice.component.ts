@@ -7,6 +7,10 @@ import {addConsoleMessage, checkCodeRequest, getRequest} from "../../store/actio
 import {Observable, Subscription} from "rxjs";
 import {consoleMessagesSelector, practiceSelector} from "../../store/selectors";
 import PracticeService from "../../services/PracticeService";
+import {MatDialog} from "@angular/material/dialog";
+import {AddMessageDialogComponent} from "../add-message-dialog/add-message-dialog.component";
+import {User} from "../../../../models/User";
+import {userSelector} from "../../../user/store/selectors";
 
 @Component({
   selector: 'app-practice',
@@ -17,7 +21,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store,
-    private service: PracticeService,
+    public dialog: MatDialog
   ) { }
 
   practice: Practice | null = null;
@@ -30,6 +34,9 @@ export class PracticeComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription | undefined;
   practiceSubscription: Subscription | undefined;
   messagesSubscription: Subscription | undefined;
+  userSubscription: Subscription | undefined;
+  user: User | null = null;
+  user$: Observable<User|null> = this.store.select(userSelector);
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe(params => {
@@ -42,6 +49,7 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.messagesSubscription = this.consoleMessages$.subscribe(messages =>
       this.consoleMessages = messages,
     )
+    this.userSubscription = this.user$.subscribe(user=>this.user = user)
   }
 
   handleInput($event: any) {
@@ -58,6 +66,10 @@ export class PracticeComponent implements OnInit, OnDestroy {
         outerCode: "",
         practiceId: this.practice.id,
       }}))
+  }
+
+  handleAskButtonClick() : void{
+    this.dialog.open(AddMessageDialogComponent, {data: {userId: this.user?.id, moderatorId: this.practice?.moderatorId}});
   }
 
   getPracticeFirstPart() : string{
@@ -84,5 +96,6 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.routeSubscription?.unsubscribe();
     this.practiceSubscription?.unsubscribe();
     this.messagesSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 }
