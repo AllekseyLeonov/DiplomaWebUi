@@ -12,3 +12,4 @@ export const getByIdRequestSuccess = createAction(dialogsKey + "getByIdRequestSu
 export const getByIdRequestError = createAction(dialogsKey + "getByIdRequestError", props<{error:string}>());
 
 export const addMessage = createAction(dialogsKey + "addMessage", props<{message: Message}>());
+export const addMessageSuccess = createAction(dialogsKey + "addMessageSuccess");

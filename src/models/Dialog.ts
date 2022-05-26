@@ -13,3 +13,15 @@ export interface Message{
   dialogId: string,
   dateTime: Date,
 }
+
+export interface AddMessageRequest{
+  text: string,
+  senderId: string,
+  dialogId: string,
+}
+
+export interface AddMessageFromPracticeRequest{
+  userId: string,
+  moderatorId: string,
+  messageText: string,
+}

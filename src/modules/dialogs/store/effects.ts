@@ -4,6 +4,7 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Action, select, Store} from "@ngrx/store";
 
 import {
+  addMessage, addMessageSuccess,
   getByIdRequest,
   getByIdRequestError,
   getByIdRequestSuccess,
@@ -12,6 +13,7 @@ import {
   getRequestSuccess,
 } from "./actions";
 import DialogService from "../services/DialogService";
+import {AddMessageRequest} from "../../../models/Dialog";
 
 @Injectable()
 export class dialogEffects {
@@ -37,6 +39,23 @@ export class dialogEffects {
               return getByIdRequestSuccess({dialog: result})
             }),
             catchError(error => of(getByIdRequestError({error})))
+          )
+        }
+      ));
+    }
+  )
+
+  addMessageEffect$: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(addMessage), switchMap(action => {
+        const request: AddMessageRequest = {
+          dialogId: action.message.dialogId,
+          senderId: action.message.sender.id,
+          text: action.message.text
+        }
+          return this.dialogService.addMessage$(request).pipe(
+            map(result => {
+              return addMessageSuccess()
+            })
           )
         }
       ));

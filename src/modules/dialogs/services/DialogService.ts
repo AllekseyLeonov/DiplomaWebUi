@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 
 import {IDialogService} from "./interfaces/IDialogService";
 import {environment} from "../../../environments/environment";
-import {Dialog} from "../../../models/Dialog";
+import {AddMessageFromPracticeRequest, AddMessageRequest, Dialog} from "../../../models/Dialog";
 
 @Injectable()
 export default class DialogService implements IDialogService{
@@ -16,5 +16,13 @@ export default class DialogService implements IDialogService{
 
   getDialogById$(id: string): Observable<Dialog> {
     return this.client.get<Dialog>(`${environment.apiRootAddress}/Dialogs/GetDialogById?id=${id}`);
+  }
+
+  addMessage$(request: AddMessageRequest): Observable<void> {
+    return this.client.post<void>(`${environment.apiRootAddress}/Dialogs/AddMessage`, request);
+  }
+
+  addMessageFromPractice$(request: AddMessageFromPracticeRequest): Observable<void> {
+    return this.client.post<void>(`${environment.apiRootAddress}/Dialogs/AddMessageFromPractice`, request);
   }
 }
