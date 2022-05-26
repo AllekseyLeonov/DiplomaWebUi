@@ -3,19 +3,23 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 15px;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.05);
   cursor: pointer;
+  border: 2px black dashed;
 }
 
 .avatar{
-  height: 70px;
+  transform: scale(3);
+  padding: 20px;
 }
 
 .message-container{
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-left: 10px;
+  height: 80px;
+  width: 100%;
 }
 
 .message{
@@ -24,4 +28,10 @@
 
 .user-name{
   font-size: 30px;
+  color: darkblue;
+}
+
+.date{
+  align-self: end;
+  padding-right: 10px;
 }

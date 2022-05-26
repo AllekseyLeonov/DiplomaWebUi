@@ -4,7 +4,7 @@ import {
   getAvailableMaterialsRequest, getAvailableMaterialsSuccess,
   getRequest,
   getRequestError,
-  getRequestSuccess,
+  getRequestSuccess, setAvailableMaterials,
   setCompletedMaterials,
   setMaterialPreview,
   setMaterials
@@ -25,5 +25,8 @@ export const materialsReducer = createReducer(
   on(setCompletedMaterials, (state, action) => {return {...state, completedMaterials: action.materials}}),
   on(getAvailableMaterialsSuccess, (state, action) => {
     return ({...state, completedMaterials: action.materials})
+  }),
+  on(setAvailableMaterials, (state, action) => {
+    return ({...state, completedMaterials: action.materials })
   })
 )

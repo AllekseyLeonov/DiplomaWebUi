@@ -3,13 +3,22 @@ import {catchError, map, Observable, of, switchMap} from "rxjs";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Action} from "@ngrx/store";
 
-import {createAccount, createAccountError, createAccountSuccess, login, loginError, loginSuccess} from "./actions";
+import {
+  createAccount,
+  createAccountError,
+  createAccountSuccess,
+  login,
+  loginError,
+  loginSuccess,
+  setUserData
+} from "./actions";
 import UserService from "../services/UserService";
-import {getAvailableMaterialsRequest} from "../../materials/store/actions";
+import {getAvailableMaterialsRequest, setAvailableMaterials} from "../../materials/store/actions";
 
 @Injectable()
 export class userEffects {
-  constructor(private userService: UserService, private actions$: Actions) {}
+  constructor(private userService: UserService, private actions$: Actions) {
+  }
 
   loginEffect$: Observable<Action> = createEffect(() => {
       return this.actions$.pipe(ofType(login), switchMap(action => {
@@ -27,6 +36,17 @@ export class userEffects {
   loginSuccessEffect$: Observable<Action> = createEffect(() => {
       return this.actions$.pipe(ofType(loginSuccess), map(loginInfo => {
           return getAvailableMaterialsRequest({userId: loginInfo.response.user?.id || ""})
+        }
+      ));
+    }
+  )
+
+  setUserEffect$: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(setUserData), map(action => {
+          if (action.user) {
+            return getAvailableMaterialsRequest({userId: action.user.id})
+          }
+          else return setAvailableMaterials({materials: []});
         }
       ));
     }

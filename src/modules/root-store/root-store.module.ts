@@ -7,6 +7,7 @@ import {MaterialsStoreModule} from "../materials/store/materials-store.module";
 import {PracticeStoreModule} from "../practice/store/practice-store.module";
 import {TheoryStoreModule} from "../theory/store/theory-store.module";
 import {UserStoreModule} from "../user/store/user-store.module";
+import {DialogsStoreModule} from "../dialogs/store/dialogs-store.module";
 
 @NgModule({
   declarations: [],
@@ -16,6 +17,7 @@ import {UserStoreModule} from "../user/store/user-store.module";
     PracticeStoreModule,
     TheoryStoreModule,
     UserStoreModule,
+    DialogsStoreModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([])
   ]

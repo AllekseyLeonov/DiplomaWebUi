@@ -17,3 +17,4 @@ export const setCompletedMaterials =
 export const getAvailableMaterialsRequest = createAction(materialsKey + "getAvailableMaterialsRequest", props<{userId: string}>());
 export const getAvailableMaterialsSuccess = createAction(materialsKey + "getAvailableMaterialsSuccess", props<{materials: string[]}>());
 export const getAvailableMaterialsError = createAction(materialsKey + "getAvailableMaterialsError", props<{error:string}>());
+export const setAvailableMaterials = createAction(materialsKey + "setAvailableMaterials", props<{materials: string[]}>());

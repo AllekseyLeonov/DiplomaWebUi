@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Store} from "@ngrx/store";
+import {setUserData} from "../../../user/store/actions";
+import {User} from "../../../../models/User";
 
 @Component({
   selector: 'app-main-page',
@@ -7,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
+    this.store.dispatch(setUserData({user: JSON.parse(localStorage.getItem('diploma-user')!) as User | null}))
   }
 
 }
