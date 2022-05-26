@@ -8,7 +8,6 @@ export interface Dialog {
 }
 
 export interface Message{
-  id: string,
   text: string,
   sender: User,
   dialogId: string,

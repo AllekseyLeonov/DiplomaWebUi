@@ -3,5 +3,6 @@ import {Observable} from "rxjs";
 import {Dialog} from "../../../../models/Dialog";
 
 export interface IDialogService {
-  getDialogs$(userId: string) : Observable<Dialog[]>
+  getDialogs$(userId: string) : Observable<Dialog[]>;
+  getDialogById$(userId: string) : Observable<Dialog>;
 }

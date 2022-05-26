@@ -40,5 +40,4 @@ export class DialogsPageComponent implements OnInit, OnDestroy {
     this.dialogsSubscription?.unsubscribe();
     this.userSubscription?.unsubscribe();
   }
-
 }

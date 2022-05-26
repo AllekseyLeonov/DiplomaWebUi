@@ -1,1 +1,21 @@
-<p>dialog works!</p>
+<div *ngIf="dialog">
+  <div style="overflow-y: auto; overflow-x: hidden; height: 80vh">
+    <div *ngFor="let message of dialog.messages" >
+      <div class="container" [ngClass]="getContainerClass(message)">
+        <mat-icon class="avatar">person</mat-icon>
+        <div class="message-container">
+          <span class="user-name">{{message.sender.name}}</span>
+          <span class="message">{{message.text}}</span>
+          <span class="date">{{message.dateTime | date:'short'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <mat-form-field appearance="fill" class="input">
+      <mat-label>Enter your message</mat-label>
+      <input matInput [(ngModel)]="newMessageText" (keydown.enter)="sendMessage()">
+    </mat-form-field>
+  </div>
+</div>

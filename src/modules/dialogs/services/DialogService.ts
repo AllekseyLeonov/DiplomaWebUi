@@ -13,4 +13,8 @@ export default class DialogService implements IDialogService{
   getDialogs$(userId: string): Observable<Dialog[]> {
     return this.client.get<Dialog[]>(`${environment.apiRootAddress}/Dialogs/GetDialogs?userId=${userId}`);
   }
+
+  getDialogById$(id: string): Observable<Dialog> {
+    return this.client.get<Dialog>(`${environment.apiRootAddress}/Dialogs/GetDialogById?id=${id}`);
+  }
 }

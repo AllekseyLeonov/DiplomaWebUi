@@ -1,6 +1,6 @@
-<div class="container" routerLink="/dialog">
+<div *ngIf="dialog" class="container" [routerLink]="['/dialog', dialog.id]">
   <mat-icon class="avatar">person</mat-icon>
-  <div *ngIf="dialog" class="message-container">
+  <div class="message-container">
     <span class="user-name">{{dialog.moderator.name}}</span>
     <span class="message">{{dialog.messages[dialog.messages.length-1].text}}</span>
     <span class="date">{{dialog.messages[dialog.messages.length-1].dateTime | date:'short'}}</span>

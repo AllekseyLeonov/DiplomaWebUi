@@ -4,6 +4,9 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Action, select, Store} from "@ngrx/store";
 
 import {
+  getByIdRequest,
+  getByIdRequestError,
+  getByIdRequestSuccess,
   getRequest,
   getRequestError,
   getRequestSuccess,
@@ -21,6 +24,19 @@ export class dialogEffects {
               return getRequestSuccess({dialogs: result})
             }),
             catchError(error => of(getRequestError({error})))
+          )
+        }
+      ));
+    }
+  )
+
+  getDialogByIdRequestEffect$: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(getByIdRequest), switchMap(action => {
+          return this.dialogService.getDialogById$(action.id).pipe(
+            map(result => {
+              return getByIdRequestSuccess({dialog: result})
+            }),
+            catchError(error => of(getByIdRequestError({error})))
           )
         }
       ));

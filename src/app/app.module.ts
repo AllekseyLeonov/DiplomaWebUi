@@ -33,7 +33,7 @@ import { CreateAccountDialogComponent } from './components/create-account-dialog
 const appRoutes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'dialogs', component: DialogsPageComponent},
-  {path: 'dialog', component: DialogComponent},
+  {path: 'dialog/:id', component: DialogComponent},
   {path: 'practice/:id', component: PracticeComponent},
   {path: 'theory/:id', component: TheoryPageComponent},
 ];
