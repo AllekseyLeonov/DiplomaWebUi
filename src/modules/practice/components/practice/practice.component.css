@@ -10,6 +10,8 @@
   flex-direction: column;
   width: 25%;
   justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .task-section{
@@ -51,12 +53,15 @@
   background-color: rgba(0,0,0,0.1);
   flex-grow: 1;
   overflow: auto;
-  padding-left: 2px;
+  padding: 10px;
+  font-family: Verdana;
 }
 
 .static-code{
+  font-family: Verdana;
   height: fit-content;
   background-color: rgba(0,0,0,0.05);
+  padding: 10px;
 }
 
 .test-button{
@@ -73,4 +78,17 @@
   align-self: center;
   overflow-y: auto;
   overflow-x: hidden;
+  font-family: Verdana;
+}
+
+.console-line{
+  padding: 5px;
+}
+
+div{
+  font-size: 1.1em;
+}
+
+button{
+  font-size: 1em;
 }

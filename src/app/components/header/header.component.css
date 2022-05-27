@@ -2,8 +2,18 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  font-size: 1.2em;
 }
 
 .button-section{
   margin-right: 5em;
+}
+
+button{
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+mat-icon{
+  transform: scale(2);
 }

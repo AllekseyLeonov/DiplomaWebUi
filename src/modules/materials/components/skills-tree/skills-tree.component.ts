@@ -160,14 +160,14 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
       });
 
     nodeEnter.append('text')
-      .attr('dx', '0.5em')
+      .attr('dx', '0.7em')
       .attr('y', (d: { children: any; _children: any; }) => {
         return -20;
       })
       .attr('text-anchor', (d: { children: any; _children: any; }) => {
         return 'start';
       })
-      .style('font', '12px sans-serif')
+      .style('font', '20px sans-serif')
       .style('font-weight', 'bold')
       .text((d: { data: { name: any; }; }) => d.data.name);
 
@@ -182,8 +182,8 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
     nodeUpdate.select('rect.node')
       .attr('x', -10)
       .attr('y', -10)
-      .attr('height', 20)
-      .attr('width', 20)
+      .attr('height', 40)
+      .attr('width', 40)
       .attr('transform', 'rotate(45)')
       .style('stroke-width', '3px')
       .style('stroke', (d: {data: Material}) => {

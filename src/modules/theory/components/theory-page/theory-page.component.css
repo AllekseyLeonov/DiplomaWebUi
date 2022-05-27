@@ -17,3 +17,12 @@
   font-family: Verdana;
 }
 
+.text{
+  font-size: 1.5em;
+  line-height: 30px;
+}
+
+button{
+  font-size: 2em;
+}
+

@@ -1,16 +1,16 @@
-<h2 mat-dialog-title>Login</h2>
+<h2 mat-dialog-title>Войти в систему</h2>
 <mat-dialog-content class="forms-container">
   <mat-form-field appearance="fill">
-    <mat-label>Enter your login</mat-label>
+    <mat-label>Введите ваш логин</mat-label>
     <input matInput type="email" [(ngModel)]="login">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-label>Enter your password</mat-label>
+    <mat-label>Введите ваш пароль</mat-label>
     <input matInput type="password" [(ngModel)]="password">
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="handleCreateAccountButtonClick()">Create account</button>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button (click)="handleSubmitButtonClick()">Submit</button>
+  <button mat-button (click)="handleCreateAccountButtonClick()">Создать аккаунт</button>
+  <button mat-button mat-dialog-close>Отмена</button>
+  <button mat-button (click)="handleSubmitButtonClick()">Подтвердить</button>
 </mat-dialog-actions>
