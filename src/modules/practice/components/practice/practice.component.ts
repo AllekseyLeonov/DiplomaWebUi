@@ -3,9 +3,9 @@ import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 
 import {Practice} from "../../../../models/Practice";
-import {addConsoleMessage, checkCodeRequest, getRequest} from "../../store/actions";
+import {addConsoleMessage, checkCodeRequest, confirmCompleted, getRequest} from "../../store/actions";
 import {Observable, Subscription} from "rxjs";
-import {consoleMessagesSelector, practiceSelector} from "../../store/selectors";
+import {consoleMessagesSelector, isCompletedSelector, practiceSelector} from "../../store/selectors";
 import PracticeService from "../../services/PracticeService";
 import {MatDialog} from "@angular/material/dialog";
 import {AddMessageDialogComponent} from "../add-message-dialog/add-message-dialog.component";
@@ -35,8 +35,12 @@ export class PracticeComponent implements OnInit, OnDestroy {
   practiceSubscription: Subscription | undefined;
   messagesSubscription: Subscription | undefined;
   userSubscription: Subscription | undefined;
+  isCompletedSubscription: Subscription | undefined;
   user: User | null = null;
   user$: Observable<User|null> = this.store.select(userSelector);
+
+  isCompleted: boolean = false;
+  isCompleted$: Observable<boolean> = this.store.select(isCompletedSelector);
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe(params => {
@@ -49,7 +53,14 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.messagesSubscription = this.consoleMessages$.subscribe(messages =>
       this.consoleMessages = messages,
     )
-    this.userSubscription = this.user$.subscribe(user=>this.user = user)
+    this.userSubscription = this.user$.subscribe(user=>this.user = user);
+    this.isCompletedSubscription = this.isCompleted$.subscribe(isCompleted => {
+      this.isCompleted = isCompleted;
+      if(this.isCompleted){
+        console.log({user: this.user, practiceId: this.practice})
+        this.store.dispatch(confirmCompleted({userId: this.user!.id, practiceId: this.practice!.id}));
+      }
+    });
   }
 
   handleInput($event: any) {
@@ -97,5 +108,6 @@ export class PracticeComponent implements OnInit, OnDestroy {
     this.practiceSubscription?.unsubscribe();
     this.messagesSubscription?.unsubscribe();
     this.userSubscription?.unsubscribe();
+    this.isCompletedSubscription?.unsubscribe();
   }
 }

@@ -6,7 +6,7 @@ import {initialState} from "./state";
 export const practiceReducer = createReducer(
   initialState,
   on(getRequest, (state) => {
-    return ({...state, isLoadingForPractice: true})
+    return ({...state, isLoadingForPractice: true, consoleMessages: initialState.consoleMessages, isCompleted: false})
   }),
   on(getRequestSuccess, (state, action) => {
     return ({...state, isLoadingForPractice: false, practice: action.practice})
@@ -16,7 +16,7 @@ export const practiceReducer = createReducer(
   ),
   on(checkCodeRequestSuccess, (state, action) => {
     const newMessagesArray = state.consoleMessages.concat(action.response.messages);
-    return ({...state, consoleMessages: newMessagesArray})
+    return ({...state, consoleMessages: newMessagesArray, isCompleted: action.response.isValid})
   }),
   on(addConsoleMessage, (state, action) => {
     const newMessagesArray = state.consoleMessages.concat(action.message);

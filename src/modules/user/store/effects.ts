@@ -64,5 +64,13 @@ export class userEffects {
       ));
     }
   )
+
+  createAccountSuccessEffect$: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(createAccountSuccess), map(loginInfo => {
+          return getAvailableMaterialsRequest({userId: loginInfo.response.user?.id || ""})
+        }
+      ));
+    }
+  )
 }
 

@@ -22,4 +22,8 @@ export default class PracticeService implements IPracticeService{
   addMessageFromPractice$(request: AddMessageFromPracticeRequest): Observable<void> {
     return this.client.post<void>(`${environment.apiRootAddress}/Dialogs/AddMessageFromPractice`, request);
   }
+
+  confirmCompleted$(userId: string, practiceId: string): Observable<void> {
+    return this.client.post<void>(`${environment.apiRootAddress}/User/ConfirmCompletedTask`, {userId, practiceId});
+  }
 }

@@ -5,11 +5,13 @@ export interface PracticeState {
   isLoadingForPractice: boolean,
   requestError: string,
   consoleMessages: string[],
+  isCompleted: boolean,
 }
 
 export const initialState : PracticeState = {
   practice: null,
   isLoadingForPractice: false,
   requestError: "",
-  consoleMessages: ["waiting for your input..."]
+  consoleMessages: ["waiting for your input..."],
+  isCompleted: false,
 }

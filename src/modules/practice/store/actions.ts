@@ -15,3 +15,7 @@ export const addConsoleMessage = createAction(practiceKey + "addConsoleMessage",
 
 export const addMessage = createAction(practiceKey + "addMessage", props<{message: AddMessageFromPracticeRequest}>());
 export const addMessageSuccess = createAction(practiceKey + "addMessageSuccess");
+
+export const confirmCompleted = createAction(practiceKey + "confirmCompleted", props<{userId: string, practiceId: string}>());
+export const confirmCompletedSuccess = createAction(practiceKey + "confirmCompletedSuccess");
+

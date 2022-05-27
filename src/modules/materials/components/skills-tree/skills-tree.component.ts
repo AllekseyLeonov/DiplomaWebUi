@@ -88,7 +88,10 @@ export class SkillsTreeComponent implements OnInit, OnDestroy {
   }
 
   isMaterialAvailable(data: Material): boolean {
-    return this.completedMaterials.includes(data.id) || this.completedMaterials.includes(data.parentId);
+    return this.completedMaterials.includes(data.id)
+      || this.completedMaterials.includes(data.parentId)
+      || data.parentId == null
+      || data.isSectionParent == true;
   };
 
   isMaterialCompleted(data: Material): boolean {

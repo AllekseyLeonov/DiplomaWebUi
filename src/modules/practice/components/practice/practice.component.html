@@ -20,6 +20,10 @@
         {{message}}
       </div>
     </div>
-    <button class="test-button" mat-button (click)="handleTestButtonClick()">Test my code</button>
+    <div>
+      <button class="test-button" mat-button (click)="handleTestButtonClick()">Test my code</button>
+      <span *ngIf="isCompleted">Пройдено!</span>
+      <span *ngIf="!isCompleted">Не пройдено</span>
+    </div>
   </div>
 </div>

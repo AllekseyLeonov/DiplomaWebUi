@@ -60,7 +60,7 @@
 }
 
 .test-button{
-  width: 20%;
+  width: 80%;
   align-self: center;
 }
 
@@ -71,4 +71,6 @@
   border: 5px dashed black;
   width: 97%;
   align-self: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

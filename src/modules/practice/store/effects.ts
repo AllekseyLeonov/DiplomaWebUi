@@ -6,12 +6,14 @@ import {Action} from "@ngrx/store";
 import {
   addMessage, addMessageSuccess,
   checkCodeRequest,
-  checkCodeRequestSuccess,
+  checkCodeRequestSuccess, confirmCompleted, confirmCompletedSuccess,
   getRequest,
   getRequestError,
   getRequestSuccess
 } from "./actions";
 import PracticeService from "../services/PracticeService";
+import {loginSuccess} from "../../user/store/actions";
+import {getAvailableMaterialsRequest} from "../../materials/store/actions";
 
 @Injectable()
 export class practiceEffects {
@@ -50,6 +52,18 @@ export class practiceEffects {
               return addMessageSuccess();
             }),
           )
+        }
+      ));
+    }
+  )
+
+  confirmCompletedEffect$: Observable<Action> = createEffect(() => {
+      return this.actions$.pipe(ofType(confirmCompleted), switchMap(action => {
+        return this.practiceService.confirmCompleted$(action.userId, action.practiceId).pipe(
+          map(result => {
+            return confirmCompletedSuccess();
+          }),
+        )
         }
       ));
     }
