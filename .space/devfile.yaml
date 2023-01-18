@@ -1,0 +1,12 @@
+schemaVersion: 2.2.0
+attributes:
+  space:
+    instanceType: regular
+    editor:
+      type: WebStorm
+components:
+  - name: dev-container
+    image:
+      imageName: my-image:latest
+      dockerfile:
+        uri: Dockerfile
